@@ -1,6 +1,4 @@
 @extends('layout')
-
-
 @section('corpo')
     <div class="row-fluid sortable">
         <div class="box span12">
@@ -13,22 +11,27 @@
                 </div>
             </div>
             <div class="box-content">
-                <form class="form-horizontal">
-                    <fieldset>
-                        <div class="control-group">
-                            <label class="control-label" for="typeahead">Nome</label>
-                            <div class="controls">
-                                <input type="text" class="span6 typeahead" id="typeahead">
-                            </div>
-                        </div>
+                @if($editar)
+                    <form method="POST" action="{{route('marcas_update',['id'=>$marca->id])}}" class="form-horizontal">
+                        @else
+                            <form method="POST" action="{{route('marcas_cadastrar')}}" class="form-horizontal">
+                                @endif
+                                {{ csrf_field() }}
+                                <fieldset>
+                                    <div class="control-group">
+                                        <label class="control-label" for="typeahead">Nome</label>
+                                        <div class="controls">
+                                            <input type="text" value="{{$marca->nome}}" class="span6 typeahead" name="marca[nome]"
+                                                   id="typeahead">
+                                        </div>
+                                    </div>
 
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">Salvar Mudanças</button>
-                            <button type="reset" class="btn">Cancelar</button>
-                        </div>
-                    </fieldset>
-                </form>
-
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary">Salvar Mudanças</button>
+                                        <button type="reset" class="btn">Cancelar</button>
+                                    </div>
+                                </fieldset>
+                            </form>
             </div>
         </div><!--/span-->
 

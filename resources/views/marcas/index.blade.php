@@ -15,32 +15,28 @@
             <div class="box-content">
                 <table class="table table-striped table-bordered bootstrap-datatable datatable">
                     <thead>
-                    <tr>
+                    <tr>#</th>
                         <th>Nome</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Dennis Ji</td>
-                        <td class="center">42991172803</td>
-                        <td class="center">dennnis@gmail.com.br</td>
-                        <td class="center">Tanquedro Neves</td>
-                        <td class="center">Guarapuava</td>
-                        <td class="center">
-                            <span class="label label-success">Active</span>
-                        </td>
-                        <td class="center">
-                            <a class="btn btn-success" href="#">
-                                <i class="halflings-icon white zoom-in"></i>
-                            </a>
-                            <a class="btn btn-info" href="#">
-                                <i class="halflings-icon white edit"></i>
-                            </a>
-                            <a class="btn btn-danger" href="#">
-                                <i class="halflings-icon white trash"></i>
-                            </a>
-                        </td>
-                    </tr>
+                    @foreach($marcas as $marca)
+                        <tr>
+                            <td>{{$marca->id}}</td>
+                            <td class="center">{{$marca->nome}}</td>
+                            <td class="center">
+                                <span class="label label-success">Active</span>
+                            </td>
+                            <td class="center">
+                                <a class="btn btn-info" href="{{route('marcas_update',['id'=>$marca->id])}}">
+                                    <i class="halflings-icon white edit"></i>
+                                </a>
+                                <a class="btn btn-danger" href="{{route('marcas_delete',['id'=> $marca->id])}}">
+                                    <i class="halflings-icon white trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach()
 
                     </tbody>
                 </table>

@@ -2,27 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\marca;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MarcasController extends Controller
 {
-    public function index(){
-        return view('marcas.index');
+    public function index()
+    {
+        $marcas = DB::table('marcas')->get();
+        return view('marcas.index', ['marcas' => $marcas]);
     }
 
-    public function show(){
+    public function show()
+    {
         return view('marcas.show');
     }
 
-    public function create(){
-        return view('marcas.form');
+    public function create(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $marca = new Marca();
+            foreach (array_keys($request->marca) as $key) {
+                $marca->$key = $request->marca[$key];
+            }
+            $marca->save();
+            return redirect()->route('marcas');
+        }
+        $marca = new Marca();
+        return view('marcas.form',['marca'=>$marca, 'editar'=> false ]);
     }
-
-    public function update(){
-        return view('marcas.form');
+    public function update(Request $request){
+        if ($request->isMethod('post')) {
+            $marca = Marca::find($request->id);
+            foreach (array_keys($request->marca) as $key) {
+                $marca->$key = $request->marca[$key];
+            }
+            $marca->save();
+            return redirect()->route('marcas');
+        } else {
+            $marcas = DB::table('marcas')->where('id', '=', $request->id)->first();
+            return view('marcas.form', ['marca' => $marcas, 'editar' => true]);
+        }
     }
-
-    public function delete(){
-
+    public function delete(Request $request){
+        Marca::find($request->id)->delete();
+        return redirect()->route('marcas');
     }
 }
